@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20" height="60" viewBox="0 0 20 60" xmlns="http://www.w3.org/2000/svg">
+    <!-- 外壳 -->
+    <rect x="0" y="0" width="20" height="60" rx="5" fill="#444"/>
+    
+    <!-- 红灯 -->
+    <circle cx="10" cy="10" r="7" fill="#ff0000"/>
+    
+    <!-- 黄灯 -->
+    <circle cx="10" cy="30" r="7" fill="#ffff00"/>
+    
+    <!-- 绿灯 -->
+    <circle cx="10" cy="50" r="7" fill="#00ff00"/>
+</svg> 

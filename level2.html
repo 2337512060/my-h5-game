@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>未来交通 - 第二关：社会政策制定</title>
+    <link rel="stylesheet" href="css/level2.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+</head>
+<body>
+    <div class="level2-container">
+        <!-- 游戏头部 -->
+        <header class="game-header">
+            <div class="back-button">
+                <button onclick="returnToMenu()" aria-label="返回主菜单">
+                    <svg viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="currentColor" d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path>
+                    </svg>
+                </button>
+            </div>
+            <h1>第二关：社会政策制定</h1>
+            <div class="game-info">
+                <div class="date-display">
+                    <span id="current-date">2050年1月</span>
+                </div>
+                <div class="score-display">
+                    <span>得分:</span>
+                    <span id="current-score">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 导航栏 -->
+        <nav class="game-nav">
+            <button class="nav-btn active" data-panel="main">主面板</button>
+            <button class="nav-btn" data-panel="policy">政策中心</button>
+            <button class="nav-btn" data-panel="timeline">时间线</button>
+            <button class="nav-btn" data-panel="events">事件中心</button>
+            <button class="nav-btn" data-panel="stats">数据分析</button>
+            <button class="nav-btn" data-panel="analysis">分析</button>
+        </nav>
+
+        <!-- 面板容器 -->
+        <div class="panel-container">
+            <!-- 主面板 -->
+            <div class="panel main-panel active" id="main-panel">
+                <div class="main-panel-content">
+                    <!-- 城市视图部分 -->
+                    <section class="city-view-section">
+                        <div class="city-container">
+                            <!-- 天空层 -->
+                            <div class="sky-layer">
+                                <div class="sun"></div>
+                                <div class="clouds">
+                                    <div class="cloud cloud-1">☁️</div>
+                                    <div class="cloud cloud-2">☁️</div>
+                                    <div class="cloud cloud-3">☁️</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 城市层 -->
+                            <div class="city-layer">
+                                <!-- 建筑群 -->
+                                <div class="buildings-group">
+                                    <div class="building">
+                                        <span class="building-icon">🏢</span>
+                                        <div class="building-status"></div>
+                                    </div>
+                                    <div class="building">
+                                        <span class="building-icon">🏫</span>
+                                        <div class="building-status"></div>
+                                    </div>
+                                    <div class="building">
+                                        <span class="building-icon">🏭</span>
+                                        <div class="building-status"></div>
+                                    </div>
+                                </div>
+
+                                <!-- 交通系统 -->
+                                <div class="transport-system">
+                                    <div class="road-network">
+                                        <div class="road horizontal"></div>
+                                        <div class="road vertical"></div>
+                                    </div>
+                                    <div class="vehicle autonomous-car">🚗</div>
+                                    <div class="vehicle flying-car">🚁</div>
+                                </div>
+
+                                <!-- 市民活动区 -->
+                                <div class="citizen-area">
+                                    <div class="park">
+                                        <span class="citizen">🚶</span>
+                                        <div class="satisfaction-indicator"></div>
+                                    </div>
+                                    <div class="community">
+                                        <span class="citizen">👥</span>
+                                        <div class="satisfaction-indicator"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 政策效果指示器 -->
+                            <div class="policy-indicators"></div>
+
+                            <!-- 天气效果 -->
+                            <div class="weather-effect"></div>
+                        </div>
+                    </section>
+
+                    <!-- 指标部分 -->
+                    <section class="indicators-section">
+                        <h2>城市指标</h2>
+                        <div class="indicators-grid">
+                            <!-- 经济指标 -->
+                            <div class="indicator-card">
+                                <div class="indicator-header">
+                                    <span class="indicator-name">经济增长率</span>
+                                    <span class="indicator-value" id="economy-value">70%</span>
+                                    <span class="indicator-trend" id="economy-trend"></span>
+                                </div>
+                                <div class="indicator-bar">
+                                    <div id="economy-progress" class="indicator-progress"></div>
+                                </div>
+                                <div class="indicator-target">目标: 90%</div>
+                            </div>
+                            <!-- 就业指标 -->
+                            <div class="indicator-card">
+                                <div class="indicator-header">
+                                    <span class="indicator-name">就业率</span>
+                                    <span class="indicator-value" id="employment-value">80%</span>
+                                    <span class="indicator-trend" id="employment-trend"></span>
+                                </div>
+                                <div class="indicator-bar">
+                                    <div id="employment-progress" class="indicator-progress"></div>
+                                </div>
+                                <div class="indicator-target">目标: 95%</div>
+                            </div>
+                            <!-- 满意度指标 -->
+                            <div class="indicator-card">
+                                <div class="indicator-header">
+                                    <span class="indicator-name">社会满意度</span>
+                                    <span class="indicator-value" id="satisfaction-value">75%</span>
+                                    <span class="indicator-trend" id="satisfaction-trend"></span>
+                                </div>
+                                <div class="indicator-bar">
+                                    <div id="satisfaction-progress" class="indicator-progress"></div>
+                                </div>
+                                <div class="indicator-target">目标: 90%</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 当前形势部分 -->
+                    <section class="current-situation">
+                        <h2>当前形势</h2>
+                        <div class="situation-content">
+                            <div class="active-events" id="active-events">
+                                <!-- 动态添加的活跃事件 -->
+                            </div>
+                            <div class="current-effects" id="current-effects">
+                                <!-- 动态添加的当前效果 -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 预算管理部分 -->
+                    <section class="budget-section">
+                        <h2>预算管理</h2>
+                        <div class="budget-cards">
+                            <div class="budget-card">
+                                <span class="budget-label">月度预算</span>
+                                <span class="budget-value" id="monthly-budget">100万</span>
+                            </div>
+                            <div class="budget-card">
+                                <span class="budget-label">累计预算</span>
+                                <span class="budget-value" id="total-budget">500万</span>
+                            </div>
+                            <div class="budget-card">
+                                <span class="budget-label">剩余预算</span>
+                                <span class="budget-value" id="remaining-budget">500万</span>
+                            </div>
+                        </div>
+                        <div class="budget-bar">
+                            <div id="budget-progress" class="budget-progress"></div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- 政策中心面板 -->
+            <div class="panel policy-panel" id="policy-panel">
+                <div class="policy-header">
+                    <div class="policy-categories">
+                        <button class="category-btn active" data-category="all">全部</button>
+                        <button class="category-btn" data-category="economy">经济</button>
+                        <button class="category-btn" data-category="employment">就业</button>
+                        <button class="category-btn" data-category="social">民生</button>
+                    </div>
+                    <div class="policy-filters">
+                        <select id="policy-sort">
+                            <option value="cost">按成本排序</option>
+                            <option value="duration">按持续时间排序</option>
+                            <option value="effect">按效果排序</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="policy-content">
+                    <div class="available-policies">
+                        <h3>可选政策</h3>
+                        <div class="policy-list-container">
+                            <div id="policy-list" class="policy-list">
+                                <!-- 动态添加的政策卡片 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="selected-policies">
+                        <h3>已选政策</h3>
+                        <div id="selected-policies-list" class="selected-policies-list">
+                            <!-- 动态添加的已选政策 -->
+                        </div>
+                        <div class="policy-limit">
+                            <span>本月可选: </span>
+                            <span id="policy-count">0/3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 时间线面板 -->
+            <div class="panel timeline-panel" id="timeline-panel">
+                <div class="timeline-header">
+                    <h2>政策时间线</h2>
+                    <div class="timeline-filters">
+                        <button class="filter-btn active" data-filter="all">全部</button>
+                        <button class="filter-btn" data-filter="active">进行中</button>
+                        <button class="filter-btn" data-filter="completed">已完成</button>
+                    </div>
+                </div>
+                <div class="timeline-content">
+                    <div id="timeline-list" class="timeline-list">
+                        <!-- 动态添加的时间线项目 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 事件中心面板 -->
+            <div class="panel events-panel" id="events-panel">
+                <div class="events-header">
+                    <h2>事件中心</h2>
+                    <div class="events-filters">
+                        <button class="filter-btn active" data-filter="all">全部事件</button>
+                        <button class="filter-btn" data-filter="active">进行中</button>
+                        <button class="filter-btn" data-filter="upcoming">即将发生</button>
+                        <button class="filter-btn" data-filter="historical">历史事件</button>
+                    </div>
+                </div>
+                <div class="events-content">
+                    <div id="events-list" class="events-list">
+                        <!-- 动态添加的事件卡片 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 数据分析面板 -->
+            <div id="stats-panel" class="panel stats-panel">
+                <!-- 时间周期选择器 -->
+                <div class="period-selector">
+                    <button class="period-btn active" data-period="month">月度</button>
+                    <button class="period-btn" data-period="quarter">季度</button>
+                    <button class="period-btn" data-period="year">年度</button>
+                </div>
+
+                <!-- 图表区域 -->
+                <div class="charts-container">
+                    <!-- 城市指标趋势图 -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">城市指标趋势</h3>
+                            <div class="chart-description">
+                                展示经济增长率、就业率和社会满意度的历史变化趋势
+                            </div>
+                        </div>
+                        <canvas id="indicators-chart"></canvas>
+                    </div>
+
+                    <!-- 预算使用情况图 -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">预算使用情况</h3>
+                            <div class="chart-description">
+                                显示每月预算的使用情况和剩余情况
+                            </div>
+                        </div>
+                        <canvas id="budget-chart"></canvas>
+                    </div>
+
+                    <!-- 政策效果分析图 -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">政策效果分析</h3>
+                            <div class="chart-description">
+                                比较当前指标与目标值的差距，展示政策实施效果
+                            </div>
+                        </div>
+                        <canvas id="policy-effect-chart"></canvas>
+                    </div>
+
+                    <!-- 财务分析图 -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3 class="chart-title">财务分析</h3>
+                            <div class="chart-description">
+                                展示收入、支出和利润的历史变化趋势
+                            </div>
+                        </div>
+                        <canvas id="finance-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- 统计摘要 -->
+                <div class="stats-summary">
+                    <!-- 财务数据 -->
+                    <div id="finance-stats" class="stats-section">
+                        <h3>财务数据</h3>
+                        <!-- 财务数据将由JS动态填充 -->
+                    </div>
+
+                    <!-- 政策统计 -->
+                    <div id="policy-stats" class="stats-section">
+                        <h3>政策统计分析</h3>
+                        <div class="stats-grid">
+                            <div class="stat-category">
+                                <h4>政策使用频率</h4>
+                                <div class="stat-content">
+                                    <!-- 将由JS动态填充 -->
+                                </div>
+                            </div>
+                            <div class="stat-category">
+                                <h4>政策效果评估</h4>
+                                <div class="stat-content">
+                                    <!-- 将由JS动态填充 -->
+                                </div>
+                            </div>
+                            <div class="stat-category">
+                                <h4>预算使用效率</h4>
+                                <div class="stat-content">
+                                    <!-- 将由JS动态填充 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 事件统计 -->
+                    <div id="event-stats" class="stats-section">
+                        <h3>事件影响分析</h3>
+                        <div class="stats-grid">
+                            <div class="stat-category">
+                                <h4>事件发生频率</h4>
+                                <div class="stat-content">
+                                    <!-- 将由JS动态填充 -->
+                                </div>
+                            </div>
+                            <div class="stat-category">
+                                <h4>事件影响评估</h4>
+                                <div class="stat-content">
+                                    <!-- 将由JS动态填充 -->
+                                </div>
+                            </div>
+                            <div class="stat-category">
+                                <h4>应对措施效果</h4>
+                                <div class="stat-content">
+                                    <!-- 将由JS动态填充 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 综合分析 -->
+                    <div id="comprehensive-stats" class="stats-section">
+                        <h3>综合分析报告</h3>
+                        <div class="stats-grid">
+                            <div class="stat-category">
+                                <h4>发展趋势</h4>
+                                <div class="stat-content">
+                                    <!-- 将由JS动态填充 -->
+                                </div>
+                            </div>
+                            <div class="stat-category">
+                                <h4>关键指标</h4>
+                                <div class="stat-content">
+                                    <!-- 将由JS动态填充 -->
+                                </div>
+                            </div>
+                            <div class="stat-category">
+                                <h4>建议措施</h4>
+                                <div class="stat-content">
+                                    <!-- 将由JS动态填充 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分析面板 -->
+            <div id="analysis-panel" class="panel">
+                <div class="panel-header">
+                    <h2>数据分析中心</h2>
+                </div>
+                <div class="panel-content">
+                    <div class="analysis-container">
+                        <!-- 政策分析部分 -->
+                        <div class="analysis-section">
+                            <h3>政策分析</h3>
+                            <div class="analysis-card">
+                                <h4>政策使用统计</h4>
+                                <div id="policy-usage-stats"></div>
+                            </div>
+                            <div class="analysis-card">
+                                <h4>政策效果评估</h4>
+                                <div id="policy-effect-stats"></div>
+                            </div>
+                            <div class="analysis-card">
+                                <h4>预算使用效率</h4>
+                                <div id="budget-efficiency-stats"></div>
+                            </div>
+                        </div>
+
+                        <!-- 事件分析部分 -->
+                        <div class="analysis-section">
+                            <h3>事件分析</h3>
+                            <div class="analysis-card">
+                                <h4>事件发生统计</h4>
+                                <div id="event-frequency-stats"></div>
+                            </div>
+                            <div class="analysis-card">
+                                <h4>事件影响评估</h4>
+                                <div id="event-impact-stats"></div>
+                            </div>
+                            <div class="analysis-card">
+                                <h4>应对措施效果</h4>
+                                <div id="response-effect-stats"></div>
+                            </div>
+                        </div>
+
+                        <!-- 综合分析报告 -->
+                        <div class="analysis-section">
+                            <h3>综合分析报告</h3>
+                            <div class="analysis-card">
+                                <h4>发展趋势</h4>
+                                <div id="development-trend"></div>
+                            </div>
+                            <div class="analysis-card">
+                                <h4>关键指标</h4>
+                                <div id="key-indicators"></div>
+                            </div>
+                            <div class="analysis-card">
+                                <h4>建议措施</h4>
+                                <div id="suggested-actions"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部控制面板 -->
+        <div class="control-panel">
+            <div class="control-info">
+                <div class="month-progress">
+                    <span>本月进度</span>
+                    <div class="progress-bar">
+                        <div id="month-progress" class="progress"></div>
+                    </div>
+                </div>
+                <div class="game-speed">
+                    <button class="speed-btn" data-speed="1">x1</button>
+                    <button class="speed-btn" data-speed="2">x2</button>
+                    <button class="speed-btn" data-speed="3">x3</button>
+                </div>
+            </div>
+            <div class="control-buttons">
+                <button id="implement-btn" class="btn-primary">确认实施</button>
+                <button id="next-month-btn" class="btn-secondary" disabled>下个月</button>
+            </div>
+        </div>
+
+        <!-- 模态框 -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <!-- 动态添加的内容 -->
+            </div>
+        </div>
+
+        <!-- 事件提示框 -->
+        <div id="event-modal" class="modal event-modal">
+            <div class="modal-content">
+                <!-- 动态添加的事件内容 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏脚本 -->
+    <script src="js/level2.js"></script>
+</body>
+</html> 

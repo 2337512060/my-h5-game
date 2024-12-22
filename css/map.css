@@ -1,0 +1,183 @@
+/* 地图容器 */
+#map-container {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* 地图控件 */
+.leaflet-control-container .leaflet-top,
+.leaflet-control-container .leaflet-bottom {
+    z-index: 900;
+}
+
+/* 自定义地图控件 */
+.map-custom-control {
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+}
+
+/* 图例 */
+.map-legend {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 10px;
+    margin-right: 8px;
+    border-radius: 2px;
+}
+
+/* 车辆标记 */
+.vehicle-marker {
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.vehicle-marker.traditional {
+    background-image: url('../assets/traditional-vehicle.png');
+}
+
+.vehicle-marker.hybrid {
+    background-image: url('../assets/hybrid-vehicle.png');
+}
+
+.vehicle-marker.electric {
+    background-image: url('../assets/electric-vehicle.png');
+}
+
+.vehicle-marker.autonomous {
+    background-image: url('../assets/autonomous-vehicle.png');
+}
+
+/* 站点标记 */
+.station-marker {
+    width: 20px;
+    height: 20px;
+    background-color: #1a73e8;
+    border: 2px solid white;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 路线样式 */
+.route-line {
+    stroke: #1a73e8;
+    stroke-width: 3;
+    stroke-opacity: 0.8;
+}
+
+.route-line:hover {
+    stroke-opacity: 1;
+    stroke-width: 4;
+}
+
+/* 拥堵指示器 */
+.congestion-low {
+    stroke: #4caf50;
+}
+
+.congestion-medium {
+    stroke: #ff9800;
+}
+
+.congestion-high {
+    stroke: #f44336;
+}
+
+/* 弹出窗口 */
+.leaflet-popup-content-wrapper {
+    border-radius: 4px;
+    padding: 0;
+}
+
+.leaflet-popup-content {
+    margin: 0;
+    padding: 10px;
+}
+
+.popup-header {
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.popup-content {
+    padding: 10px;
+}
+
+.popup-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.popup-stat-item {
+    font-size: 12px;
+    color: #666;
+}
+
+.popup-stat-value {
+    font-weight: bold;
+    color: #1a73e8;
+}
+
+/* 热力图样式 */
+.heatmap-gradient {
+    background: linear-gradient(to right,
+        rgba(0, 0, 255, 0.4),
+        rgba(0, 255, 0, 0.4),
+        rgba(255, 255, 0, 0.4),
+        rgba(255, 0, 0, 0.4)
+    );
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .map-legend {
+        bottom: 10px;
+        right: 10px;
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .legend-color {
+        width: 16px;
+        height: 8px;
+    }
+
+    .vehicle-marker {
+        width: 24px;
+        height: 24px;
+    }
+
+    .station-marker {
+        width: 16px;
+        height: 16px;
+    }
+} 

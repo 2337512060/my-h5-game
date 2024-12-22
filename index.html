@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>未来无人交通 - 新纪元城市</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/level1.css">
+    <link rel="stylesheet" href="css/level2.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="start-screen">
+            <h1>未来无人交通</h1>
+            <div class="game-intro">
+                <h2>背景故事</h2>
+                <p>在不远的未来，科技的飞速发展使得无人驾驶交通系统全面普及。全球首个完全由AI和自动化系统管理的智能城市——"新纪元城市"应运而生。这个城市依靠一个强大的核心运算中枢（Central Computing Hub, CCH）来管理所有无人交通工具。</p>
+                <p>你将扮演李明，一名年轻且才华横溢的交通系统操作员，刚刚晋升为"新纪元城市"无人交通管理中心的核心成员。在城市建设和运营的关键阶段，你需要应对无人交通系统带来的各种挑战。</p>
+                <div class="mission">
+                    <h3>你的任务</h3>
+                    <ul>
+                        <li>第一关：处理交通路口突发故障，手动调度车辆通行</li>
+                        <li>第二关：制定社会政策，维护城市稳定发展</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="level-selection">
+                <h2>选择关卡</h2>
+                <div class="level-buttons">
+                    <button id="level1" class="level-btn">第一关：交通路口调度</button>
+                    <button id="level2" class="level-btn">第二关：社会政策制定</button>
+                </div>
+            </div>
+            <button id="startGame" class="start-btn">开始游戏</button>
+        </div>
+
+        <div class="level1-container" style="display: none;">
+            <div class="game-header">
+                <div class="score">得分：<span id="score">0</span></div>
+                <div class="timer">剩余时间：<span id="timer">60</span>秒</div>
+            </div>
+            
+            <div class="intersection-container">
+                <div class="intersection">
+                    <div class="intersection-decoration"></div>
+                    <div class="road horizontal"></div>
+                    <div class="road vertical"></div>
+                    
+                    <div class="zebra-crossing north"></div>
+                    <div class="zebra-crossing south"></div>
+                    <div class="zebra-crossing east"></div>
+                    <div class="zebra-crossing west"></div>
+                    
+                    <div class="road-decoration north"></div>
+                    <div class="road-decoration south"></div>
+                    <div class="road-decoration east"></div>
+                    <div class="road-decoration west"></div>
+                    
+                    <div class="traffic-light north" data-direction="north"></div>
+                    <div class="traffic-light south" data-direction="south"></div>
+                    <div class="traffic-light east" data-direction="east"></div>
+                    <div class="traffic-light west" data-direction="west"></div>
+                    
+                    <div id="vehicles-container"></div>
+                </div>
+            </div>
+            
+            <div class="control-panel">
+                <div class="traffic-controls">
+                    <button id="toggleNS" class="control-btn">南北方向</button>
+                    <button id="toggleEW" class="control-btn">东西方向</button>
+                </div>
+                <div class="vehicle-info">
+                    <p>等待车辆：<span id="waiting-vehicles">0</span></p>
+                    <p>通过车辆：<span id="passed-vehicles">0</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二关：社会政策制定 -->
+        <div class="level2-container" style="display: none;">
+            <div class="game-header">
+                <h2>社会政策制定</h2>
+                <div class="level-info">第二关</div>
+            </div>
+
+            <div class="city-indicators">
+                <div class="indicator">
+                    <h3>经济增长率</h3>
+                    <div class="value" id="economy-value">70%</div>
+                    <div class="target">目标：90%</div>
+                </div>
+                <div class="indicator">
+                    <h3>就业率</h3>
+                    <div class="value" id="employment-value">80%</div>
+                    <div class="target">目标：95%</div>
+                </div>
+                <div class="indicator">
+                    <h3>社会满意度</h3>
+                    <div class="value" id="satisfaction-value">75%</div>
+                    <div class="target">目标：90%</div>
+                </div>
+            </div>
+
+            <div class="policy-container">
+                <div class="policy-list" id="policy-list">
+                    <!-- 政策卡片将通过 JavaScript 动态生成 -->
+                </div>
+
+                <div class="budget-panel">
+                    <h3>预算管理</h3>
+                    <div class="budget-info">
+                        <p>剩余预算：<span id="budget-value">500万</span></p>
+                        <div class="budget-bar">
+                            <div class="budget-progress" id="budget-progress"></div>
+                        </div>
+                    </div>
+                    <div class="control-panel">
+                        <button id="implement-btn" class="control-btn">实施政策</button>
+                        <button id="restart-btn" class="control-btn">重新开始</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏结束弹窗 -->
+    <div id="game-over" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>游戏结束</h2>
+            <p>最终得分：<span id="final-score">0</span></p>
+            <div class="modal-buttons">
+                <button onclick="restartLevel()">重新开始</button>
+                <button onclick="returnToMenu()">返回主菜单</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 消息提示弹窗 -->
+    <div id="message-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <!-- 消息内容将通过 JavaScript 动态插入 -->
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/level1.js"></script>
+    <script src="js/level2.js"></script>
+</body>
+</html> 
